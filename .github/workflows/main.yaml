@@ -16,7 +16,7 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
 
       - name: Instalar pnpm
         uses: pnpm/action-setup@v3
@@ -32,7 +32,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Instalar dependencias
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Ejecutar Linter en el monorepo
         # Esto ejecutará ESLint/Prettier según lo definido en turbo.json
