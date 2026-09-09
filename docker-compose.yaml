@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # Base de datos compartida para el entorno local
+  mongodb:
+    image: mongo:6.0
+    container_name: rappi_mongo_dev
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - rappi_network
+
+  # El API Gateway
+  api-gateway:
+    image: node:20-alpine
+    container_name: api_gateway_dev
+    working_dir: /app
+    volumes:
+      - .:/app
+    # Utilizamos pnpm y turbo directamente desde el contenedor
+    command: sh -c "npm install -g pnpm && pnpm install && pnpm --filter api-gateway run dev"
+    ports:
+      - "4000:4000"
+    depends_on:
+      - mongodb
+    networks:
+      - rappi_network
+
+  # Ejemplo de uno de tus microservicios (Órdenes)
+  service-orders:
+    image: node:20-alpine
+    container_name: service_orders_dev
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: sh -c "npm install -g pnpm && pnpm install && pnpm --filter service-orders run dev"
+    ports:
+      - "4001:4001"
+    depends_on:
+      - mongodb
+    networks:
+      - rappi_network
+
+volumes:
+  mongo_data:
+
+networks:
+  rappi_network:
+    driver: bridge
