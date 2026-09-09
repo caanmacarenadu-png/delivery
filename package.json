@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "private":"true",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +22,7 @@
   },
   "type": "module",
   "devDependencies": {
-    "turbo": "^2.10.12"
-  }
+    "turbo": "latest"
+  },
+  "packageManager": "pnpm@9.0.0"
 }
